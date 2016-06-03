@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+// Include UI system code frameworks.
+using UnityEngine.EventSystems;
 
 public class RayShooter : MonoBehaviour {
 	private Camera _camera;
@@ -7,8 +9,9 @@ public class RayShooter : MonoBehaviour {
 	void Start() {
 		_camera = GetComponent<Camera>();
 
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
+		// Don't lock and hide cursor as we need it for the GUI now.
+		// Cursor.lockState = CursorLockMode.Locked;
+		// Cursor.visible = false;
 	}
 
 	void OnGUI() {
@@ -19,7 +22,11 @@ public class RayShooter : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetMouseButtonDown(0)) {
+		if (Input.GetMouseButtonDown(0) &&
+
+			// Check that GUI isn't being used before we trigger shooting code.
+			! EventSystem.current.IsPointerOverGameObject()) {
+
 			Vector3 point = new Vector3(_camera.pixelWidth/2, _camera.pixelHeight/2, 0);
 			Ray ray = _camera.ScreenPointToRay(point);
 			RaycastHit hit;
