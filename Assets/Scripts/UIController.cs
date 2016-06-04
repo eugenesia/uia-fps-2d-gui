@@ -8,9 +8,13 @@ public class UIController : MonoBehaviour {
 	// Reference text object in scene to set text property.
 	[SerializeField] private Text scoreLabel;
 
+	// Popup window to adjust settings.
+	[SerializeField] private SettingsPopup settingsPopup;
+
 	// Use this for initialization
 	void Start () {
-	
+		// Close popup when game starts.
+		settingsPopup.Close();
 	}
 	
 	// Update is called once per frame
@@ -20,10 +24,10 @@ public class UIController : MonoBehaviour {
 
 	// Method called by settings button.
 	public void OnOpenSettings() {
-		Debug.Log("open settings");
+		settingsPopup.Open();
 	}
 
-	// Method called by Event Trigger on settings button.
+	// Method called by Event																																																																																																																																																																																																												 Trigger on settings button.
 	public void OnPointerDown() {
 		Debug.Log("pointer down");
 	}
