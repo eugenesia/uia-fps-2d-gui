@@ -35,6 +35,9 @@ public class RayShooter : MonoBehaviour {
 				ReactiveTarget target = hitObject.GetComponent<ReactiveTarget>();
 				if (target != null) {
 					target.ReactToHit();
+					// Broadcast event that enemy has been hit, so listeners can react,
+					// e.g. by incrementing the score.
+					Messenger.Broadcast(GameEvent.ENEMY_HIT);
 				} else {
 					StartCoroutine(SphereIndicator(hit.point));
 				}
