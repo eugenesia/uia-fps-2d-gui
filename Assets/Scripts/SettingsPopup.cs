@@ -35,6 +35,9 @@ public class SettingsPopup : MonoBehaviour {
 
 	// Will trigger when user adjusts slider.
 	public void OnSpeedValue(float speed) {
+		// Broadcast the speed change together with the speed value.
+		Messenger<float>.Broadcast(GameEvent.SPEED_CHANGED, speed);
+
 		Debug.Log("Speed: " + speed);
 		// Save the speed value, to reload on start.
 		PlayerPrefs.SetFloat("speed", speed);

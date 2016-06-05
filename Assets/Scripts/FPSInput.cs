@@ -7,6 +7,9 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 [AddComponentMenu("Control Script/FPS Input")]
 public class FPSInput : MonoBehaviour {
+	// Multiplier from speed in UI to actual player speed.
+	public const float baseSpeed = 6.0f;
+
 	public float speed = 6.0f;
 	public float gravity = -9.8f;
 
@@ -28,5 +31,17 @@ public class FPSInput : MonoBehaviour {
 		movement *= Time.deltaTime;
 		movement = transform.TransformDirection(movement);
 		_charController.Move(movement);
+	}
+
+	void Awake() {
+		Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+	}
+
+	void OnDestroy() {
+		Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+	}
+
+	private void OnSpeedChanged(float value) {
+		speed = baseSpeed * value;
 	}
 }
